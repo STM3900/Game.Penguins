@@ -5,11 +5,11 @@
                     xmlns:viewModels="clr-namespace:Game.Penguins.ViewModels">
 
     <Style x:Key="ItemGroupLabelStyle" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="{adonisUi:Space 0, 2, 0, 0.5}"/>
-        <Setter Property="Padding" Value="0"/>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="{adonisUi:Space 0, 2, 0, 0.5}" />
+        <Setter Property="Padding" Value="0" />
     </Style>
 
     <DataTemplate DataType="{x:Type viewModels:CurrentGameViewModel}">
@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <hx:HexList Margin="5"
-                    RowCount="8" 
+                    RowCount="8"
                     ColumnCount="8"
                     Grid.Column="0"
                     Width="750"
@@ -32,12 +32,12 @@
                     ItemsSource="{Binding Cells}">
                 <hx:HexList.ItemContainerStyle>
                     <Style TargetType="{x:Type hx:HexItem}">
-                        <Setter Property="Grid.Row" Value="{Binding Path=Y}"/>
-                        <Setter Property="Grid.Column" Value="{Binding Path=X}"/>
-                        <Setter Property="BorderThickness" Value="0.6"/>
-                        <Setter Property="BorderBrush" Value="LightGray"/>
-                        <Setter Property="FontSize" Value="16"/>
-                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Grid.Row" Value="{Binding Path=Y}" />
+                        <Setter Property="Grid.Column" Value="{Binding Path=X}" />
+                        <Setter Property="BorderThickness" Value="0.6" />
+                        <Setter Property="BorderBrush" Value="LightGray" />
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="Background" Value="White" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=IsSelectedFirst}" Value="True">
                                 <Setter Property="BorderBrush" Value="BlueViolet" />
@@ -73,7 +73,7 @@
                                 Visibility="{Binding Path=IsYellow, Converter={StaticResource VisibleIfTrueConverter}}"></Image>
                             <Image Source="/Ressources/green.png" Stretch="UniformToFill" Width="50" Height="50"
                                 Visibility="{Binding Path=IsGreen, Converter={StaticResource VisibleIfTrueConverter}}"></Image>
-                            <TextBlock Foreground="Black" Text="{Binding XY}" Visibility="Collapsed"></TextBlock>
+                            <TextBlock Text="{Binding XY}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontWeight="Bold"></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </hx:HexList.ItemTemplate>

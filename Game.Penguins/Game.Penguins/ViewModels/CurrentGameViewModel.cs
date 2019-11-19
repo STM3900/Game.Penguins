@@ -1,16 +1,15 @@
 ﻿using Game.Penguins.Commands;
-using Game.Penguins.Core.Interfaces.Game.Actions;
 using Game.Penguins.Core.Interfaces.Game.GameBoard;
 using Game.Penguins.Core.Interfaces.Game.Players;
 using Game.Penguins.Framework;
+using Game.Penguins.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace Game.Penguins.ViewModels
 {
-    class CurrentGameViewModel
+    internal class CurrentGameViewModel
         : ViewModel
         , IApplicationContentView
     {
@@ -36,6 +35,7 @@ namespace Game.Penguins.ViewModels
 
         private CellViewModel selectedFirst;
         private CellViewModel selectedSecond;
+
         public CellViewModel SelectedCell
         {
             get
@@ -91,11 +91,12 @@ namespace Game.Penguins.ViewModels
             }
         }
 
-        #endregion
+        #endregion Interactions
 
         #region Game state
 
         private string currentPlayerName;
+
         public string CurrentPlayerName
         {
             get => currentPlayerName;
@@ -119,13 +120,14 @@ namespace Game.Penguins.ViewModels
 
         public bool IsRed { get; private set; }
 
-        #endregion
+        #endregion Colors
 
-        #endregion
+        #endregion Game state
 
         #region Actions
 
         private bool isPlacePenguinAction;
+
         public bool IsPlacePenguinAction
         {
             get => isPlacePenguinAction;
@@ -140,6 +142,7 @@ namespace Game.Penguins.ViewModels
         }
 
         private bool isMovePenguinAIAction;
+
         public bool IsMovePenguinAIAction
         {
             get => isMovePenguinAIAction;
@@ -152,8 +155,9 @@ namespace Game.Penguins.ViewModels
                 }
             }
         }
-        
+
         private bool isMoveMyPenguinAction;
+
         public bool IsMoveMyPenguinAction
         {
             get => isMoveMyPenguinAction;
@@ -168,6 +172,7 @@ namespace Game.Penguins.ViewModels
         }
 
         private bool isPlacePenguinAIAction;
+
         public bool IsPlacePenguinAIAction
         {
             get => isPlacePenguinAIAction;
@@ -215,14 +220,16 @@ namespace Game.Penguins.ViewModels
 
         public void PlayPlacePenguinHuman()
         {
-            game.PlacePenguinManual(SelectedCell.X, SelectedCell.Y);
-
+            if (SelectedCell != null)
+            {
+                game.PlacePenguinManual(SelectedCell.X, SelectedCell.Y);
+            }
             CheckActions();
         }
 
         public void PlayAI()
         {
-            if(IsPlacePenguinAIAction)
+            if (IsPlacePenguinAIAction)
                 game.PlacePenguin();
             else if (IsMovePenguinAIAction)
                 game.Move();
@@ -253,15 +260,15 @@ namespace Game.Penguins.ViewModels
             }
         }
 
-        #endregion
+        #endregion Actions
 
         public CurrentGameViewModel(IList<ConfigurationPlayer> players)
             : base()
         {
             // TODO : Initialize with the right implementation
-            game = (IGame)new CustomGame();
-            //game = new CustomGame();
-            
+            // game = (IGame)null;
+            game = new MainGame();
+
             game.StateChanged += Game_StateChanged;
 
             InitGame(players);
@@ -294,7 +301,7 @@ namespace Game.Penguins.ViewModels
         /// </summary>
         private void LoadMap()
         {
-            for(int i = 0; i < 8; i++)
+            for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
@@ -318,15 +325,14 @@ namespace Game.Penguins.ViewModels
 
             CurrentPlayerName = game.CurrentPlayer.Name;
 
-            IsPlacePenguinAIAction = game.NextAction == NextActionType.PlacePenguin && 
+            IsPlacePenguinAIAction = game.NextAction == NextActionType.PlacePenguin &&
                                         game.CurrentPlayer.PlayerType != PlayerType.Human;
-            IsPlacePenguinAction = game.NextAction == NextActionType.PlacePenguin && 
+            IsPlacePenguinAction = game.NextAction == NextActionType.PlacePenguin &&
                                     game.CurrentPlayer.PlayerType == PlayerType.Human;
             IsMovePenguinAIAction = game.NextAction == NextActionType.MovePenguin &&
                                     game.CurrentPlayer.PlayerType != PlayerType.Human;
             IsMoveMyPenguinAction = game.NextAction == NextActionType.MovePenguin &&
                                     game.CurrentPlayer.PlayerType == PlayerType.Human;
-
 
             IsBlue = game.CurrentPlayer.Color == PlayerColor.Blue;
             IsYellow = game.CurrentPlayer.Color == PlayerColor.Yellow;
