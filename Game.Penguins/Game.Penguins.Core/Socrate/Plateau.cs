@@ -5,86 +5,53 @@ using System.Text;
 
 namespace Game.Penguins.Core.Socrate
 {
-	class Plateau : IBoard
-	{
-		public ICell[,] Board => throw new NotImplementedException();
-		private int case1poisson = 34;
-		private int case2poissons = 20;
-		private int case3poissons = 10;
-   
-		//génération aléatoire de la position des poissons sur le plateau
-        public int[] GenerationPoisson()
-		{
-            Random rand = new Random(); // zbeub
-            int randpoisson = rand.Next(1, 3);
+    public class Plateau : IBoard
+    {
+        public ICell[,] Board => throw new NotImplementedException();
+        private int case1poisson = 34;
+        private int case2poissons = 20;
+        private int case3poissons = 10;
+        
+        //génération aléatoire de la position des poissons sur le plateau
+        public List<int> GenerationPoisson()
+        {
+            Random rand = new Random();
+           
+            List<int> tab = new List<int>(64);
+            List<int> tabFinal = new List<int>();
 
-            int tailleTab = 64;
-            int[] tab = new int[tailleTab];
-			for (int i = 0; i < tailleTab; i++)
-			{
-				randpoisson = rand.Next(1, 3);
-				if (randpoisson == 3 && case3poissons > 0)
-				{
-					tab[i] = 3;
-					case3poissons--;
-				}
-				else if (randpoisson == 2 && case2poissons > 0)
-				{
-                    tab[i] = 2;
-					case2poissons--;
-				}
-				else if (randpoisson == 1 && case1poisson > 0)
-				{
-					tab[i] = 1;
-					case1poisson--;
-				}
-                else if(case1poisson == 0 && case2poissons > 0 && case3poissons > 0)
-				{
-					randpoisson = rand.Next(2, 3);
-                    tab[i] = randpoisson;
-                }
-				else if (case2poissons == 0 && case1poisson > 0 && case3poissons > 0)
-				{
-					randpoisson = rand.Next(1, 2);
-                    if(randpoisson == 2){
-                        randpoisson = 3;
-                    }
-					tab[i] = randpoisson;
-				}
-				else if (case3poissons == 0 && case2poissons > 0 && case1poisson > 0)
-				{
-					randpoisson = rand.Next(1, 2);
-					tab[i] = randpoisson;
-				}
-                else if(case1poisson < 0 && case2poissons < 0 && case3poissons > 0)
-                {
-                    tab[i] = 3;
-                }
-                else if (case2poissons < 0 && case1poisson < 0 && case2poissons > 0)
-                {
-                    tab[i] = 2;
-                }
-                else if (case3poissons < 0 && case2poissons < 0 && case1poisson > 0)
-                {
-                    tab[i] = 1;
-                }
+            for (int i = 0; i < 34; i++)
+            {
+                tab.Add(1);
+            }
+            for (int i = 0; i < 20; i++)
+            {
+                tab.Add(2);
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                tab.Add(3);
             }
 
-			return tab;
-		}
+            while (tab.Count > 0)
+            {
+                int index = rand.Next(0, tab.Count);
+				tabFinal.Add(tab[index]);
+                tab.RemoveAt(index);
+            }
 
-		//génération du plateau de jeu principal
-		public void GenerationPlateau()
+			return tabFinal;
+        }
+
+        //génération du plateau de jeu principal
+        public int[,] GenerationPlateau()
 		{
 			int tailleX = 8;
 			int tailleY = 8;
             int[,] tab = new int[8, 8];
             int[,] tabcoord = new int[8, 8];
 
-            //int coordonneeX = 0;
-            //int coordonneeY = 0;
-
-            int[] tabPoisson = new int[64];
+            List<int> tabPoisson = new List<int>(64);
             tabPoisson = GenerationPoisson();
             int tailleTab = 0;
 
@@ -101,10 +68,78 @@ namespace Game.Penguins.Core.Socrate
             {
                 for (int j = 0; j < tailleY; j++)
                 {
-                    tab[i, j] = tabPoisson[tailleTab];
+                    tabcoord[i, j] = tabPoisson[tailleTab];
                 }
-                tailleTab++;
             }
+
+            return tab;
         }
+
+		public void GenerationPingouins()
+		{
+			int nb_joueurs = 0;
+			int nb_pingouins = 0;
+			//recupérer le nb de joueurs depuis le menu principal
+			
+			if (nb_joueurs == 2)
+			{
+				nb_pingouins = 8;
+				int nb_pingouinsJ1 = 4;
+				int nb_pingouinsJ2 = 4;
+				for(int i = 0; i < nb_pingouinsJ1; i++)
+				{
+					//placement des pingouins
+				}
+				for(int i = 0; i < nb_pingouinsJ2; i++)
+				{
+
+				}
+			}
+
+			if (nb_joueurs == 3)
+			{
+				nb_pingouins = 9;
+				int nb_pingouinsJ1 = 3;
+				int nb_pingouinsJ2 = 3;
+				int nb_pingouinsJ3 = 3;
+				for (int i = 0; i < nb_pingouinsJ1; i++)
+				{
+					//placement des pingouins
+				}
+				for (int i = 0; i < nb_pingouinsJ2; i++)
+				{
+
+				}
+				for (int i = 0; i < nb_pingouinsJ3; i++)
+				{
+
+				}
+			}
+
+			if (nb_joueurs == 4)
+			{
+				nb_pingouins = 8;
+				int nb_pingouinsJ1 = 2;
+				int nb_pingouinsJ2 = 2;
+				int nb_pingouinsJ3 = 2;
+				int nb_pingouinsJ4 = 2;
+				for (int i = 0; i < nb_pingouinsJ1; i++)
+				{
+					//placement des pingouins
+				}
+				for (int i = 0; i < nb_pingouinsJ2; i++)
+				{
+
+				}
+				for (int i = 0; i < nb_pingouinsJ3; i++)
+				{
+
+				}
+				for (int i = 0; i < nb_pingouinsJ4; i++)
+				{
+
+				}
+			}
+		}
 	}
 }

@@ -259,6 +259,7 @@ namespace Game.Penguins.ViewModels
             : base()
         {
             // TODO : Initialize with the right implementation
+			//remplacer new CustomGame par notre classe
             game = (IGame)new CustomGame();
             //game = new CustomGame();
             
