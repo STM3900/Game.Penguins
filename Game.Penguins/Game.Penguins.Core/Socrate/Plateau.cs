@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Game.Penguins.Core.Socrate
 {
-    public class Plateau : IBoard
+    public class Board : IBoard
     {
         public ICell[,] Board => throw new NotImplementedException();
         private int case1poisson = 34;

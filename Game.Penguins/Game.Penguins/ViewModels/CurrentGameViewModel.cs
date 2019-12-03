@@ -2,6 +2,7 @@
 using Game.Penguins.Core.Interfaces.Game.Actions;
 using Game.Penguins.Core.Interfaces.Game.GameBoard;
 using Game.Penguins.Core.Interfaces.Game.Players;
+using Game.Penguins.Core.Socrate;
 using Game.Penguins.Framework;
 using System;
 using System.Collections.Generic;

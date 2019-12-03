@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Game.Penguins
+namespace Game.Penguins.Fake
 {
     public static class BoardExtensions
     {
