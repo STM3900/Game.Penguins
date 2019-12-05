@@ -7,8 +7,8 @@ namespace Game.Penguins.Core.Socrate
 {
     public class Board : IBoard
     {
-        public ICell[,] Board => throw new NotImplementedException();
-        private int case1poisson = 34;
+        //public ICell[,] Plateau => throw new NotImplementedException();
+		private int case1poisson = 34;
         private int case2poissons = 20;
         private int case3poissons = 10;
         

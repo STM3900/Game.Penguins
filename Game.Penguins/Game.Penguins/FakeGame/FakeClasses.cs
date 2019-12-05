@@ -1,4 +1,4 @@
-﻿using Game.Penguins.Core.Interfaces.Game.GameBoard;
+﻿    using Game.Penguins.Core.Interfaces.Game.GameBoard;
 using Game.Penguins.Core.Interfaces.Game.Players;
 using System;
 using System.Collections.Generic;
@@ -660,7 +660,7 @@ namespace Game.Penguins.Fake
                     }
                 }
             }
-        }
+        } 
 
         #endregion
     }

@@ -2,59 +2,71 @@
 using Game.Penguins.Core.Interfaces.Game.Players;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using Game.Penguins.Core.Socrate;
 
 namespace Game.Penguins.Core.Socrate
 {
 	public class CustomGame : IGame
 	{
-		private IBoard Plateau;
-		public IBoard Board { get { return Plateau; }
-			set
-			{
-				Plateau = value;
-				if (StateChanged != null)
-					StateChanged.Invoke(this, null);
-			}
-		}
+		IBoard IGame.Board => throw new NotImplementedException();
+        
+		public NextActionType NextAction { get; set; }
 
-		public NextActionType NextAction => throw new NotImplementedException();
+		public IPlayer CurrentPlayer { get { return CurrentPlayerObject; } }
+		private int currentPlayerIndex = 0;
+		public Player CurrentPlayerObject { get; set; }
 
-		public IPlayer CurrentPlayer => throw new NotImplementedException();
-
-		public IList<IPlayer> Players => throw new NotImplementedException();
+		public IList<IPlayer> Players { get { return PlayersObject.OfType<IPlayer>().ToList(); } }
+		private int penguinsByPlayer = 4;
+		public List<Player> PlayersObject { get; set; } = new List<Player>();
 
 		public event EventHandler StateChanged;
 
 		public IPlayer AddPlayer(string playerName, PlayerType playerType)
 		{
-			List<Player> players = new List<Player>();
-			
+			var identifier = Guid.NewGuid();
+
+			PlayersObject.Add(new Player()
+			{
+				Identifier = identifier,
+				Name = playerName,
+				PlayerType = playerType,
+				Penguins = 0,
+				Points = 0,
+			});
+
+			return PlayersObject.Last();
 		}
 
-		public void Move()
+		public void Move() //move pour les IAs ()
 		{
 			throw new NotImplementedException();
 		}
 
 		public void MoveManual(ICell origin, ICell destination)
 		{
-			throw new NotImplementedException();
+			//fonction de déplacement by Noé
 		}
 
-		public void PlacePenguin()
+		public void PlacePenguin() //placement des IAs ()
 		{
 			throw new NotImplementedException();
 		}
 
 		public void PlacePenguinManual(int x, int y)
 		{
-			throw new NotImplementedException();
+			//fonction de placement
 		}
 
 		public void StartGame()
 		{
-			throw new NotImplementedException();
+			Board Plateau = new Board();
+			{
+				Board[,] new_Plateau = new Board[8, 8];
+			}
+			Plateau.GenerationPlateau();
+			Plateau.GenerationPingouins();
 		}
 	}
 

@@ -12,7 +12,7 @@ namespace Game.Penguins.AI.UnitTests
 		[TestMethod]    
 		public void TestValeurPoisson()
 		{
-			Plateau plateau = new Plateau();
+			Board plateau = new Board();
 
             List<int> tabTest = plateau.GenerationPoisson();
 			int resul = tabTest.Count(c => c == 1);
