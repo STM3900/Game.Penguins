@@ -8,7 +8,15 @@ namespace Game.Penguins.Core.Socrate
 {
 	public class CustomGame : IGame
 	{
-		public IBoard Board { get { return } }
+		private IBoard Plateau;
+		public IBoard Board { get { return Plateau; }
+			set
+			{
+				Plateau = value;
+				if (StateChanged != null)
+					StateChanged.Invoke(this, null);
+			}
+		}
 
 		public NextActionType NextAction => throw new NotImplementedException();
 
@@ -153,15 +161,23 @@ namespace Game.Penguins.Core.Socrate
 			}
 		}
 
-		private IPenguin currentPenguin;
-		public IPenguin CurrentPenguin
+		private Penguin currentPenguinObject;
+		public Penguin CurrentPenguinObject
 		{
-			get { return currentPenguin; }
+			get { return currentPenguinObject; }
 			set
 			{
-				currentPenguin = value;
+				currentPenguinObject = value;
 				if (StateChanged != null)
 					StateChanged.Invoke(this, null);
+			}
+		}
+
+		public IPenguin CurrentPenguin
+		{
+			get
+			{
+				return currentPenguinObject;
 			}
 		}
 
@@ -172,9 +188,9 @@ namespace Game.Penguins.Core.Socrate
 	{
 		public IPlayer Player
 		{
-			get { return PlayerObject; }
+			get { return Penguin_Object; }
 		}
 
-		public Player PlayerObject { get; private set; }
+		public Player Penguin_Object { get; private set; }
 	}
 }
