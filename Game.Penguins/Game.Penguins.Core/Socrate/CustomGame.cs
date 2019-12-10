@@ -4,13 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Penguins.Core.Socrate;
+using Game.Penguins.Core.Interfaces;
 
 namespace Game.Penguins.Core.Socrate
 {
 	public class CustomGame : IGame
 	{
-		IBoard IGame.Board => throw new NotImplementedException();
-        
+		IBoard IGame.Board { get { return BoardObject; } }
+		public Board BoardObject { get; set; }
+
 		public NextActionType NextAction { get; set; }
 
 		public IPlayer CurrentPlayer { get { return CurrentPlayerObject; } }
@@ -18,7 +20,7 @@ namespace Game.Penguins.Core.Socrate
 		public Player CurrentPlayerObject { get; set; }
 
 		public IList<IPlayer> Players { get { return PlayersObject.OfType<IPlayer>().ToList(); } }
-		private int penguinsByPlayer = 4;
+		private int penguinsByPlayer = 0;
 		public List<Player> PlayersObject { get; set; } = new List<Player>();
 
 		public event EventHandler StateChanged;
@@ -46,29 +48,48 @@ namespace Game.Penguins.Core.Socrate
 
 		public void MoveManual(ICell origin, ICell destination)
 		{
-			//fonction de déplacement by Noé
+			//fonction de déplacement
 		}
 
-		public void PlacePenguin() //placement des IAs ()
-		{
-			throw new NotImplementedException();
-		}
+        public void PlacePenguin() //placement des IAs ()
+        {
+			
+           // Random rand = new Random();
+            
+        }
 
 		public void PlacePenguinManual(int x, int y)
 		{
-			//fonction de placement
-		}
+            //fonction de placement
+            Cell tempTab = BoardObject.BoardObject[x, y];
+			Penguin tempPenguin = new Penguin();
+			tempTab.CurrentPenguinObject = tempPenguin;
+            tempTab.CurrentPenguinObject.PlayerObject = CurrentPlayerObject;
+
+            tempTab.CellType = CellType.FishWithPenguin;
+            
+			currentPlayerIndex++;
+
+            CurrentPlayerObject = PlayersObject[currentPlayerIndex];
+
+            if (StateChanged != null)
+                StateChanged.Invoke(this, null);
+        }
 
 		public void StartGame()
 		{
-			Board Plateau = new Board();
+			BoardObject = new Board();
 			{
-				Board[,] new_Plateau = new Board[8, 8];
+				Board[,] new_Plateau = new Board[8,8];
 			}
-			Plateau.GenerationPlateau();
-			Plateau.GenerationPingouins();
+            BoardObject.GenerationPlateau();
+			CurrentPlayerObject = PlayersObject[0];
+
+			if (StateChanged != null)
+				StateChanged.Invoke(this, null);
 		}
-	}
+
+    }
 
 	public class Player : IPlayer
 	{
@@ -200,9 +221,9 @@ namespace Game.Penguins.Core.Socrate
 	{
 		public IPlayer Player
 		{
-			get { return Penguin_Object; }
+			get { return PlayerObject; }
 		}
 
-		public Player Penguin_Object { get; private set; }
+		public Player PlayerObject { get; set; }
 	}
 }

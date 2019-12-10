@@ -11,9 +11,12 @@ namespace Game.Penguins.Core.Socrate
 		private int case1poisson = 34;
         private int case2poissons = 20;
         private int case3poissons = 10;
-        
-        //génération aléatoire de la position des poissons sur le plateau
-        public List<int> GenerationPoisson()
+
+		ICell[,] IBoard.Board { get { return BoardObject; } }
+		public Cell[,] BoardObject { get; set; }
+
+		//génération aléatoire de la position des poissons sur le plateau
+		public List<int> GenerationPoisson()
         {
             Random rand = new Random();
            
@@ -44,22 +47,23 @@ namespace Game.Penguins.Core.Socrate
         }
 
         //génération du plateau de jeu principal
-        public int[,] GenerationPlateau()
+        public void GenerationPlateau()
 		{
 			int tailleX = 8;
 			int tailleY = 8;
-            int[,] tab = new int[8, 8];
-            int[,] tabcoord = new int[8, 8];
 
             List<int> tabPoisson = new List<int>(64);
             tabPoisson = GenerationPoisson();
             int tailleTab = 0;
+            BoardObject = new Cell[8, 8];
 
 			for (int i=0; i < tailleX; i++)
 			{
 				for (int j=0; j < tailleY; j++)
 				{
-                    tab[i,j] = tabPoisson[tailleTab];
+                    Cell tempCell = new Cell();
+                    tempCell.FishCount = tabPoisson[tailleTab];
+                    BoardObject[i, j] = tempCell;
 				}
                 tailleTab++;
 			}
@@ -68,78 +72,16 @@ namespace Game.Penguins.Core.Socrate
             {
                 for (int j = 0; j < tailleY; j++)
                 {
-                    tabcoord[i, j] = tabPoisson[tailleTab];
+					Cell tempCell = new Cell();
+					tempCell.FishCount = tabPoisson[tailleTab];
+					BoardObject[i, j] = tempCell;
                 }
             }
-
-            return tab;
         }
 
-		public void GenerationPingouins()
-		{
-			int nb_joueurs = 0;
-			int nb_pingouins = 0;
-			//recupérer le nb de joueurs depuis le menu principal
-			
-			if (nb_joueurs == 2)
-			{
-				nb_pingouins = 8;
-				int nb_pingouinsJ1 = 4;
-				int nb_pingouinsJ2 = 4;
-				for(int i = 0; i < nb_pingouinsJ1; i++)
-				{
-					//placement des pingouins
-				}
-				for(int i = 0; i < nb_pingouinsJ2; i++)
-				{
-
-				}
-			}
-
-			if (nb_joueurs == 3)
-			{
-				nb_pingouins = 9;
-				int nb_pingouinsJ1 = 3;
-				int nb_pingouinsJ2 = 3;
-				int nb_pingouinsJ3 = 3;
-				for (int i = 0; i < nb_pingouinsJ1; i++)
-				{
-					//placement des pingouins
-				}
-				for (int i = 0; i < nb_pingouinsJ2; i++)
-				{
-
-				}
-				for (int i = 0; i < nb_pingouinsJ3; i++)
-				{
-
-				}
-			}
-
-			if (nb_joueurs == 4)
-			{
-				nb_pingouins = 8;
-				int nb_pingouinsJ1 = 2;
-				int nb_pingouinsJ2 = 2;
-				int nb_pingouinsJ3 = 2;
-				int nb_pingouinsJ4 = 2;
-				for (int i = 0; i < nb_pingouinsJ1; i++)
-				{
-					//placement des pingouins
-				}
-				for (int i = 0; i < nb_pingouinsJ2; i++)
-				{
-
-				}
-				for (int i = 0; i < nb_pingouinsJ3; i++)
-				{
-
-				}
-				for (int i = 0; i < nb_pingouinsJ4; i++)
-				{
-
-				}
-			}
-		}
+			/*système des IAs : -pour l'IA de niveau 1 : elle cherche en priorité à récupérer les cases qui comportes 1 poisson puis 2 puis 3
+								-pour l'IA de niveau 2 : elle cherche en priorité à récupérer les cases qui comportes 2 poisson puis 3 puis 1
+								-pour l'IA de niveau 3 : elle cherche en priorité à récupérer les cases qui comportes 3 poisson puis 2 puis 1
+			*/
 	}
 }
