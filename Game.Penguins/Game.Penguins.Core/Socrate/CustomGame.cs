@@ -41,7 +41,7 @@ namespace Game.Penguins.Core.Socrate
 			return PlayersObject.Last();
 		}
 
-		public void Move() //move pour les IAs ()
+		public void Move() //move pour les IAs 
 		{
 			throw new NotImplementedException();
 		}
@@ -51,12 +51,32 @@ namespace Game.Penguins.Core.Socrate
 			//fonction de déplacement
 		}
 
-        public void PlacePenguin() //placement des IAs ()
+        public void PlacePenguin() //placement des IAs 
         {
+			Random randX = new Random();
+			Random randY = new Random();
 			
-           // Random rand = new Random();
-            
-        }
+			while (PlayersObject.Count() != 0)
+			{
+				int coordX = randX.Next(1, 8);
+				int coordY = randX.Next(1, 8);
+				Cell tempTab = BoardObject.BoardObject[coordX, coordY];
+				Penguin tempPenguin = new Penguin();
+
+				if (tempTab.fishCount == 1)
+				{
+					tempTab.CurrentPenguinObject = tempPenguin;
+					tempTab.CurrentPenguinObject.PlayerObject = CurrentPlayerObject;
+					tempTab.CellType = CellType.FishWithPenguin;
+					currentPlayerIndex++;
+					CurrentPlayerObject = PlayersObject[currentPlayerIndex];
+				}
+				else { coordX = 0; coordY = 0; coordX = randX.Next(1, 8); coordY = randX.Next(1, 8); }
+					}
+			if (StateChanged != null)
+				StateChanged.Invoke(this, null);
+
+		}
 
 		public void PlacePenguinManual(int x, int y)
 		{
@@ -182,7 +202,7 @@ namespace Game.Penguins.Core.Socrate
 			}
 		}
 
-		private int fishCount;
+		public int fishCount;
 		public int FishCount
 		{
 			get { return fishCount; }

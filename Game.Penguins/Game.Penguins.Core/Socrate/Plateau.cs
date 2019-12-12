@@ -27,11 +27,11 @@ namespace Game.Penguins.Core.Socrate
             {
                 tab.Add(1);
             }
-            for (int i = 0; i < 20; i++)
+            for (int i = 35; i < 54; i++)
             {
                 tab.Add(2);
             }
-            for (int i = 0; i < 10; i++)
+            for (int i = 55; i < 64; i++)
             {
                 tab.Add(3);
             }
@@ -81,7 +81,6 @@ namespace Game.Penguins.Core.Socrate
 
 			/*système des IAs : -pour l'IA de niveau 1 : elle cherche en priorité à récupérer les cases qui comportes 1 poisson puis 2 puis 3
 								-pour l'IA de niveau 2 : elle cherche en priorité à récupérer les cases qui comportes 2 poisson puis 3 puis 1
-								-pour l'IA de niveau 3 : elle cherche en priorité à récupérer les cases qui comportes 3 poisson puis 2 puis 1
-			*/
+								-pour l'IA de niveau 3 : elle cherche en priorité à récupérer les cases qui comportes 3 poisson puis 2 puis 1 */
 	}
 }
